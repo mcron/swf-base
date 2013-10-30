@@ -41,12 +41,7 @@ def mainconf(menuid):
     return [(_("Boot Neutrino"), main, "bootneutrino", None)]
 
 def Plugins(**kwargs):
-	return [PluginDescriptor(name = _("Boot Neutrino"), 
-			description = _("Boot Neutrino as default"), 
-			where = PluginDescriptor.WHERE_PLUGINMENU, 
-			fnc = main, 
-			icon="plugin.png"),
-		PluginDescriptor(name = _("Boot Neutrino"),
+	return [PluginDescriptor(name = _("Boot Neutrino"),
                         description = _("Boot Neutrino as default"),
                         where = PluginDescriptor.WHERE_MENU,
                         fnc = mainconf)]
