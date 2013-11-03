@@ -6,7 +6,8 @@ if [ -e /usr/bin/enigma2 ]; then
 
 	rm -rf /etc/.nhd2
 	touch /etc/.e2
-fi
 
+fi
+reboot
 
 exit 0
