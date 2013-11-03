@@ -8,24 +8,10 @@ from Components.Input import Input
 from Components.Language import language
 from Components.config import config, ConfigSubsection, ConfigYesNo, ConfigLocations, ConfigText, ConfigSelection, getConfigListEntry, ConfigInteger
 from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_LANGUAGE
-from os import environ as os_environ
+from os import path, path as os_path, system as os_system, system, popen, unlink, stat, mkdir, rmdir, makedirs, remove, rename, listdir, environ, walk as os_walk
+from Screens.Console import Console
 import gettext
 import os
-
-def localeInit():
-	lang = language.getLanguage()[:2] # getLanguage returns e.g. "fi_FI" for "language_country"
-	os_environ["LANGUAGE"] = lang # Enigma doesn't set this (or LC_ALL, LC_MESSAGES, LANG). gettext needs it!
-	gettext.bindtextdomain("NeutrinoHD2", resolveFilename(SCOPE_PLUGINS, "Extensions/NeutrinoHD2/locale"))
-
-def _(txt):
-	t = gettext.dgettext("NeutrinoHD2", txt)
-	if t == txt:
-		print "[NeutrinoHD2] fallback to default translation for", txt
-		t = gettext.gettext(txt)
-	return t
-
-localeInit()
-language.addCallback(localeInit)
 
 
 def runboot(session, result):
@@ -33,7 +19,8 @@ def runboot(session, result):
 		session.open(Console, title = _("Boot Neutrino"),cmdlist = [_("sh '/usr/lib/enigma2/python/Plugins/Extensions/NeutrinoHD2/nhd2boot.sh' en_EN")])
 
 def main(session, **kwargs):
-	session.openWithCallback(lambda r: runboot(session, r), MessageBox, _("Do you want to boot Neutrino as default?\n"), MessageBox.TYPE_YESNO, timeout = 20, default = True)
+	session.openWithCallback(lambda r: runboot(session, r), MessageBox, _("Do you want to boot Neutrino as default?\n"), MessageBox.TYPE_YESNO, timeout = 20, default = False)
+
 
 def mainconf(menuid):
     if menuid != "setup":
